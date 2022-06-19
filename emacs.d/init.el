@@ -623,13 +623,13 @@ before packages are loaded."
   (setq org-todo-keywords
         '((sequence "TODO" "DOING" "REVIEW" "|" "DONE" "WONTDO")))
 
-  ;;(setq org-agenda-files '("~/org" "~/org-tpl"))
-  (setq org-agenda-files (append (directory-files-recursively "~/org-tpl" "\\.org$")
-                                 (directory-files-recursively "~/org" "\\.org$")))
+  (defun v-update-agenda-files()
+    (interactive)
+    (setq org-agenda-files (append (directory-files-recursively "~/org-tpl" "\\.org$")
+                                   (directory-files-recursively "~/org" "\\.org$"))))
+  (v-update-agenda-files)
 
   ;; TODO(VDSK) Setup eslint, and save hook.
-  ;; TODO(VDSK) somehow back this shit up :) Maybe dropbox...
-
 )
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
