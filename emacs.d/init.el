@@ -37,6 +37,7 @@ This function should only modify configuration layer settings."
      yaml
      vimscript
      html
+     kotlin
      (typescript :variables
                  typescript-backend 'lsp
                  typescript-indent-level 2
@@ -578,6 +579,8 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  ;; NOTE(VDSK) Imports
+  (load-file "~/.dotfiles/ob-kotlin.el")
 
   ;; NOTE(VDSK) I don't want ~undo.tree~ mess :)
   (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
@@ -585,6 +588,8 @@ before packages are loaded."
   ;; NOTE(VDSK) Custom web-mode hook
   (defun v-web-mode-hook ()
     (setq web-mode-markup-indent-offset 2)
+    (setq web-mode-css-indent-offset 2)
+    (setq web-mode-attr-indent-offset 2)
     (setq web-mode-code-indent-offset 2))
   (add-hook 'web-mode-hook 'v-web-mode-hook)
 
@@ -628,8 +633,6 @@ before packages are loaded."
     (setq org-agenda-files (append (directory-files-recursively "~/org-tpl" "\\.org$")
                                    (directory-files-recursively "~/org" "\\.org$"))))
   (v-update-agenda-files)
-
-  ;; TODO(VDSK) Setup eslint, and save hook.
 )
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
@@ -642,7 +645,10 @@ This function is called at the very end of Spacemacs initialization."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(evil-want-Y-yank-to-eol nil)
- '(org-agenda-files '("/Users/violetdusk/org/til.org"))
+ '(js-indent-level 2)
+ '(js-jsx-indent-level 2)
+ '(org-agenda-files
+   '("/Users/violetdusk/org/bucketplace/interview-questions.org" "/Users/violetdusk/org/bucketplace/interviews.org" "/Users/violetdusk/org/journal/2022-06.org" "/Users/violetdusk/org/backlog.org" "/Users/violetdusk/org/til.org"))
  '(package-selected-packages
    '(toml-mode rust-mode ron-mode kotlin-mode flycheck-rust flycheck-kotlin cargo js2-mode evil-unimpaired evil-collection dap-mode bui helm helm-core typescript-mode hybrid-mode evil-evilified-state yasnippet-snippets yapfify yaml-mode ws-butler writeroom-mode winum which-key web-mode web-beautify volatile-highlights vimrc-mode vim-powerline vi-tilde-fringe uuidgen use-package undo-tree treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil toc-org tide tagedit symon symbol-overlay string-inflection string-edit sphinx-doc spacemacs-whitespace-cleanup spacemacs-purpose-popwin spaceline-all-the-icons space-doc slim-mode scss-mode sass-mode restart-emacs request rainbow-delimiters quickrun pytest pylookup pyenv-mode pydoc py-isort pug-mode prettier-js popwin poetry pippel pipenv pip-requirements pcre2el password-generator paradox overseer org-superstar org-rich-yank org-projectile org-present org-pomodoro org-mime org-download org-contrib org-cliplink open-junk-file npm-mode nose nodejs-repl nameless multi-line macrostep lsp-ui lsp-treemacs lsp-python-ms lsp-pyright lsp-origami lorem-ipsum livid-mode live-py-mode link-hint json-reformat json-navigator json-mode js2-refactor js-doc inspector info+ indent-guide importmagic impatient-mode hungry-delete holy-mode hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-xref helm-themes helm-swoop helm-pydoc helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-lsp helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot fuzzy font-lock+ flycheck-pos-tip flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-tutor evil-textobj-line evil-terminal-cursor-changer evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-cleverparens evil-args evil-anzu eval-sexp-fu emr emmet-mode elisp-slime-nav elisp-def dumb-jump drag-stuff dotenv-mode dired-quick-sort diminish diff-hl devdocs define-word dactyl-mode cython-mode copilot company-web company-anaconda column-enforce-mode code-cells clean-aindent-mode centered-cursor-mode browse-at-remote blacken auto-yasnippet auto-highlight-symbol auto-compile annalist aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
 (custom-set-faces
